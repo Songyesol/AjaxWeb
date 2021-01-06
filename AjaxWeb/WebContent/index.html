@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>홈페이지</title>
+</head>
+<body>
+	<h1>반갑습니당</h1>
+	<div id = 'show'></div>
+	<script>
+		let xhtp = new XMLHttpRequest();
+		xhtp.open('get','home');
+		xhtp.send();
+		xhtp.onload = showContent;
+		
+		function showContent() {
+			
+				console.log(xhtp.responseXML);
+				let doc = xhtp.responseXML;
+				let result = doc.getElementsByTagName('record');
+
+
+	            let table = document.createElement('table');
+	            table.setAttribute('border','1');
+	            table.style.textAlign = 'center';
+	           	table.append(createHeader(result[0]));  //nodeName 출력해서 표 맨 위에 넣는 callback함수
+	            
+	            for(let j = 0; j<result.length ; j++ ){
+	                let trTag = document.createElement('tr');
+	                table.appendChild(trTag);
+
+	                for( let k = 0; k < result[j].childNodes.length; k++ ) { 
+	                let td1 = document.createElement('td');
+	                let text = document.createTextNode(result[j].childNodes[k].childNodes[0].nodeValue);
+	                td1.appendChild(text);
+	                trTag.appendChild(td1);
+	                }
+	            }
+	            document.getElementById('show').appendChild(table);
+		}
+	
+		function createHeader(title) {
+			 let tr = document.createElement('tr');
+	            for (let i = 0; i<title.childNodes.length; i++){
+	            	let th = document.createElement('th');
+	            	let str = title.childNodes[i].nodeName;
+	            	let textNd =document.createTextNode(str);
+	            	tr.appendChild(th);
+	            	th.appendChild(textNd);
+	            }
+	          return tr;
+		}
+	</script>
+</body>
+</html>

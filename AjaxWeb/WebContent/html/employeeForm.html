@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/employeeForm.html</title>
+<script src = "showPage.js"></script>
+</head>
+<body>
+	<div id = 'show'></div>
+	<script>
+		let xhtp = new XMLHttpRequest();
+		xhtp.open('get','home'); //현재 html이 있는 파일 경로에 맞춰 서블릿 경로도 맞춰주어야한다. 
+		xhtp.send();
+		xhtp.onload = showPage; //전체 리스트를 보여주는 페이지.
+		
+	</script>
+</body>
+</html>
