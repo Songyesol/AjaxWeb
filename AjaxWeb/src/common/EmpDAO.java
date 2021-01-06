@@ -89,5 +89,26 @@ public class EmpDAO {
 		
 		return r==1 ? true:false;
 	}// end of deleteEmp()
+	
+	public boolean insertEmp(EmployeeVO vo) {
+		String sql = "insert into emp_temp (employee_id,first_name, last_name, email, hire_date, job_id) "
+				+ "values(employees_seq.nextval,?,?,?,sysdate,?)";
+		int resultTime= 0;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1,vo.getFirstName());
+			psmt.setString(2, vo.getLastName());
+			psmt.setString(3, vo.getEmail());
+			psmt.setString(4, vo.getJobId());
+			
+			resultTime= psmt.executeUpdate();
+			System.out.println(resultTime + "건이 입력되었습니다.");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultTime == 1?true:false;
+	} //end of insertEmp()
 }
 	

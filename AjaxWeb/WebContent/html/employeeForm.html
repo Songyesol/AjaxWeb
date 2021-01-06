@@ -3,11 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <title>html/employeeForm.html</title>
-<script src = "showPage.js"></script>
+<script src = "showPage2.js"></script>
 </head>
 <body>
+	<table> <!-- insert할 내용 적는 input tag -->
+		<tr><td>firstName</td>
+		<td><input type = 'text' id = 'fName' name = 'fName'></td></tr>
+		<tr><td>lastName</td>
+		<td><input type = 'text' id = 'lName' name = 'lName'></td></tr>
+		<tr><td>email</td>
+		<td><input type = 'text' id = 'email' name = 'email'></td></tr>
+		<tr><td>jobId</td>
+		<td><input type = 'text' id = 'jobId' name = 'jobId'></td></tr>
+		<tr><td><button id = 'btn' onclick = 'saveBtn()'>저장</button></td></tr>
+	</table>
+	
 	<div id = 'show'></div>
 	<script>
+	
+	function saveBtn(){
+		console.log(btn);
+		
+		let saveReq = new XMLHttpRequest();
+		let fName = document.getElementById('fName').value;
+		let lName = document.getElementById('lName').value;
+		let email = document.getElementById('email').value;
+		let jobId = document.getElementById('jobId').value;
+		
+		let url = '../insertEmp?fName='+fName+'&lName='+lName+'&email='+email+'&jobId='+jobId;
+		saveReq.open('get',url);
+		saveReq.send();
+		saveReq.onload = function(){
+			console.log(saveReq.responseXML);
+			//화면구성: 화면에 추가된 행 보여주는 구문 ==>table.appendChild(tr)
+			let trTag =document.createElement('tr');
+			
+
+			//1.
+			let tdTag=document.createElement('td');
+			let val = documenent.getElementById('fName').value;
+			let tNode = document.createElement(val);
+			tdTag.appendChild(tNode);
+			trTag.appendChild(tdTag);
+			//2.
+			tdTag=document.createElement('td');
+			val = documenent.getElementById('lName').value;
+			tNode = document.createElement(val);
+			tdTag.appendChild(tNode);
+			trTag.appendChild(tdTag);
+			//3.
+			tdTag=document.createElement('td');
+			val = documenent.getElementById('email').value;
+			tNode = document.createElement(val);
+			tdTag.appendChild(tNode);
+			trTag.appendChild(tdTag);
+			//4.
+			tdTag=document.createElement('td');
+			val = documenent.getElementById('jobId').value;
+			tNode = document.createElement(val);
+			tdTag.appendChild(tNode);
+			trTag.appendChild(tdTag);
+			//5.
+			tdTag =document.createElement('td');
+			let btn = document.createElement('button');
+			btn.innerHTML='삭제';
+			tdTag.appendChild(btn);
+			trTag.appendChild(tdTag);
+			
+			
+			document.getElementById('table').appendChild(trTag);
+			
+		}
+	}
+	
 		let xhtp = new XMLHttpRequest();
 		xhtp.open('get','home'); //현재 html이 있는 파일 경로에 맞춰 서블릿 경로도 맞춰주어야한다. 
 		xhtp.send();
