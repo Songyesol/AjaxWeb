@@ -31,7 +31,6 @@ public class HomeServer extends HttpServlet {
 				+ "<lastName>" +emp.getLastName() +"</lastName>"
 				+ "<email>" + emp.getEmail()+"</email>"
 				+ "<hireDate>"+emp.getHireDate()+"</hireDate>"
-				+ "<phoneNumber>"+emp.getPhoneNumber()+"</phoneNumber>"
 				+ "<jobId>"+emp.getJobId()+"</jobId>"
 				+ "<salary>"+emp.getSalary()+"</salary>";
 				

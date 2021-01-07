@@ -5,7 +5,6 @@ public class EmployeeVO {
 	String firstName;
 	String LastName;
 	String email;
-	String phoneNumber;
 	String hireDate;
 	String jobId;
 	int salary;
@@ -35,12 +34,6 @@ public class EmployeeVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
 	public String getHireDate() {
 		return hireDate;
 	}
@@ -59,12 +52,12 @@ public class EmployeeVO {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	
 	@Override
 	public String toString() {
 		return "EmployeeVO [employeeId=" + employeeId + ", firstName=" + firstName + ", LastName=" + LastName
-				+ ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", jobId=" + jobId
-				+ ", salary=" + salary + "]";
+				+ ", email=" + email + ", hireDate=" + hireDate + ", jobId=" + jobId + ", salary=" + salary + "]";
 	}
+	
+	
 	
 	}

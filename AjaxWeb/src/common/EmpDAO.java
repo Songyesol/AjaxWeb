@@ -33,6 +33,8 @@ public class EmpDAO {
 
 	} //end of 생성자
 	
+/////////////////// SELECT ////////////////////
+	
 	public List<EmployeeVO> getEmpList() {
 		String sql = "select * from emp_temp order by 1 desc";
 		List<EmployeeVO> list = new ArrayList<>();
@@ -47,7 +49,6 @@ public class EmpDAO {
 				vo.setLastName(rs.getString("last_name"));
 				vo.setEmail(rs.getString("email"));
 				vo.setHireDate(rs.getString("hire_date"));
-				vo.setPhoneNumber(rs.getString("phone_number"));
 				vo.setJobId(rs.getString("job_id"));
 				vo.setSalary(rs.getInt("salary"));
 				
@@ -68,6 +69,7 @@ public class EmpDAO {
 		return list;
 	}// end of getEmpList()
 	
+/////////////////// DELETE ////////////////////
 	public boolean deleteEmp(EmployeeVO vo) {
 		String sql = "delete from emp_temp where employee_id = ?";
 		int r=0;
@@ -90,25 +92,81 @@ public class EmpDAO {
 		return r==1 ? true:false;
 	}// end of deleteEmp()
 	
-	public boolean insertEmp(EmployeeVO vo) {
+/////////////////// INSERT ////////////////////
+	public EmployeeVO insertEmp(EmployeeVO vo) {
+		String sql1 = "select employees_seq.nextval from dual";
+		String sql2 = "select * from emp_temp where employee_id = ?";
 		String sql = "insert into emp_temp (employee_id,first_name, last_name, email, hire_date, job_id) "
-				+ "values(employees_seq.nextval,?,?,?,sysdate,?)";
+				+ "values(?,?,?,?,sysdate,?)";
 		int resultTime= 0;
+		String newSeq = null;
+		EmployeeVO newVo = new EmployeeVO(); 
+		
 		try {
-			PreparedStatement psmt = conn.prepareStatement(sql);
-			psmt.setString(1,vo.getFirstName());
-			psmt.setString(2, vo.getLastName());
-			psmt.setString(3, vo.getEmail());
-			psmt.setString(4, vo.getJobId());
+			PreparedStatement psmt = conn.prepareStatement(sql1);
+			ResultSet rs = psmt.executeQuery();
+			if (rs.next()) {
+				newSeq = rs.getString(1);//1은 쿼리한 첫번째 컬럼을 의미 
+			} // 시퀀스 번호 조회한 것을 newSeq변수에 담음
 			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, newSeq);
+			psmt.setString(2,vo.getFirstName());
+			psmt.setString(3, vo.getLastName());
+			psmt.setString(4, vo.getEmail());
+			psmt.setString(5, vo.getJobId());
 			resultTime= psmt.executeUpdate();
 			System.out.println(resultTime + "건이 입력되었습니다.");
+			
+			psmt = conn.prepareStatement(sql2);
+			psmt.setString(1, newSeq);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				newVo.setEmail(rs.getString("email"));
+				newVo.setEmployeeId(rs.getInt("employee_id"));
+				newVo.setFirstName(rs.getString("first_name"));
+				newVo.setLastName(rs.getString("last_name"));
+				newVo.setJobId(rs.getString("job_id"));
+				newVo.setHireDate(rs.getString("hire_date"));
+				newVo.setSalary(rs.getInt("salary"));
+				
+			}
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return resultTime == 1?true:false;
+		return newVo;
 	} //end of insertEmp()
+	
+/////////////////// UPDATE ////////////////////
+	public EmployeeVO updateEmp(EmployeeVO vo) { 
+	String sql = "update emp_temp set first_name = ?, last_name = ?, email = ?, job_id=? where employee_id = ?"; 
+	int r = 0;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1,vo.getFirstName());
+			psmt.setString(2,vo.getLastName());
+			psmt.setString(3,vo.getEmail());
+			psmt.setString(4,vo.getJobId());
+			psmt.setInt(5,vo.getEmployeeId());
+			
+			r = psmt.executeUpdate();
+			System.out.println(r + "건이 업데이트 되었습니다");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return vo;	
+	} //end of updateEmp()
+	
+	
 }
 	

@@ -45,6 +45,7 @@ function addBtn(tr,callBackFunc) {
 	return tr;
 }
 
+	
 function titleRow(result){ //result = 매개변수
 	console.log(result[0].childNodes[2].nodeName);
 	let trTag = document.createElement('tr');
@@ -68,13 +69,29 @@ function mouseOver(){
 function mouseOut(){
 	this.style.background = '';
 }
+function putData(){
+	let eId = document.getElementById('eId');
+	let fName = document.getElementById('fName');	
+	let lName = document.getElementById('lName');
+	let email = document.getElementById('email');
+	let jobId = document.getElementById('jobId');
+	
+	eId.value = this.childNodes[0].firstChild.nodeValue;
+	fName.value = this.childNodes[1].firstChild.nodeValue;
+	lName.value = this.childNodes[2].firstChild.nodeValue;
+	email.value = this.childNodes[3].firstChild.nodeValue;
+	jobId.value = this.childNodes[5].firstChild.nodeValue;
+}
 
 function contentRow(result){
 	let trTags =[];
 	for(let j=0; j<result.length ; j++){
 		let trTag = document.createElement('tr');
-	trTag.onmouseover = mouseOver;
-	trTag.onmouseout = mouseOut;
+		let empId = result[j].childNodes[0].firstChild.nodeValue;
+		trTag.setAttribute('id','emp_'+empId);		
+		trTag.onmouseover = mouseOver;
+		trTag.onmouseout = mouseOut;
+		trTag.onclick = putData;
 			for(let i=0; i<result[0].childNodes.length; i++){
 				let tdTag = document.createElement('td');
 				let textNode = document.createTextNode(result[j].childNodes[i].firstChild.nodeValue);
