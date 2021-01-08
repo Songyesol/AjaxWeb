@@ -27,8 +27,12 @@ function delFunc() {
 	console.log(this.parentNode.parentNode.remove()); //-->화면에서 행삭제
 	let id = this.parentNode.parentNode.childNodes[0].firstChild.nodeValue;
 	let xhtp = new XMLHttpRequest();
-	xhtp.open('get','../deleteEmp?empId='+id); //--> ajax에 연결된 deleteEmp를 통해 db에 해당 행 삭제
-	xhtp.send();
+	let url = 'empId='+id;
+	xhtp.open('post','../deleteEmp');
+	xhtp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhtp.send(url);
+/*	xhtp.open('get','../deleteEmp'); //--> ajax에 연결된 deleteEmp를 통해 db에 해당 행 삭제
+	xhtp.send();*/
 	xhtp.onload = function(){
 		console.log(xhtp.responseText);
 	}

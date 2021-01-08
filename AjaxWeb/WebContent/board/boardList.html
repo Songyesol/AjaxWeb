@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>boardList.html</title>
+<script src='../js/showPage.js?ver=1'></script>
+</head>
+<body>
+	<!-- 화면에 게시판 데이터를 table 형식으로 화면에 출력  -->
+	<!-- DAO 메소드 1 , Servlet, ajax 호출 (XMLHttpRequest()) -->
+
+	<form name="form" action="updateBoard" method="GET"><!-- 서블렛의 doGet이 실행된다  -->
+		<input id="brdNo" type='text'><br> 
+		<label for="title">제목:</label> 
+		<input id='title1' type="text" name="title1"><br>
+		<labelfor="content">내용: </label> 
+		<input id='content1' type="text"name="content1"><br> 
+		<label for="writer">작성자: </label> 
+		<input id='writer1' type="text" name="writer1"><br>
+		<p></p>
+		<input type="button" id="button" value="수정">
+		<p></p>
+	</form>
+
+
+	<div id='show'></div>
+	<script>
+		 	document.getElementById('button').onclick = function() {
+				let title = document.getElementById('title1');
+				let content = document.getElementById('content1');
+				let writer = document.getElementById('writer1');
+
+				let updateReq = new XMLHttpRequest();
+				let url = '../updateBoard?title=' + title + '&content=' + content + '&writer='
+						+ writer;
+				updateReq.open('get', url);
+				updateReq.send();
+				updateReq.onload = function() {
+					console.log(updateReq.responseText);
+				}
+			}
+
+		let xhtp = new XMLHttpRequest();
+		xhtp.open('get', '../getBoardSurvlet');
+		xhtp.send();
+		xhtp.onload = showPage;
+	</script>
+
+</body>
+</html>

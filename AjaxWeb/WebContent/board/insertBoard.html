@@ -13,7 +13,7 @@
 		<label for = "writer">작성자: </label>
 		<input type = "text" name = "writer"><br>
 		<p></p>
-		<input type = "button"  id = "btn" value = "저장">
+		<input type = "button"  id = "btn" value = "등록">
 		<input type = "reset" value = "취소">
 	</form>
 	<script>
@@ -23,7 +23,7 @@
 			let writer = document.getElementsByTagName('input')[2].value;
 			
 			let xhtp = new XMLHttpRequest();
-			let url = 'insertBoard?title='+title+'&content='+content+'&writer='+writer;
+			let url = '../insertBoard?title='+title+'&content='+content+'&writer='+writer;
 			xhtp.open('get',url );
 			xhtp.send();
 			xhtp.onload = function() {

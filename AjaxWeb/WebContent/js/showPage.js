@@ -3,9 +3,9 @@
  */
 
 function showPage(){
+	console.log(xhtp.responseXML);
 	let doc = xhtp.responseXML;
 	let data = doc.getElementsByTagName('record');
-	console.log(data);
 	
 	let tableTag = document.createElement('table');
 	tableTag.setAttribute('border','1');
@@ -33,10 +33,10 @@ function titleRow(result){ //result = 매개변수
 		trTag.appendChild(thTag);
 	}
 	
-	let thTag = document.createElement('th');
+/*	let thTag = document.createElement('th');
 		let textNode = document.createTextNode('처리');
 		thTag.appendChild(textNode);
-		trTag.appendChild(thTag);
+		trTag.appendChild(thTag);*/
 	return trTag;
 }
 
@@ -44,11 +44,22 @@ function contentRow(result){
 	let trTags =[];
 	for(let j=0; j<result.length ; j++){
 		let trTag = document.createElement('tr');
-		trTag.onmouseover = function(){
+	trTag.onmouseover = function(){
 			this.style.background = 'yellowgreen';
 		}
 		trTag.onmouseout = function() {
 			this.style.background = '';
+		}
+		trTag.onclick = function() {
+			let no = document.getElementById('brdNo');
+			let title = document.getElementById('title1');
+			let content = document.getElementById('content1');
+			let writer = document.getElementById('writer1');
+			
+			no.value = this.childNodes[0].firstChild.nodeValue;
+			title.value = this.childNodes[1].firstChild.nodeValue;
+			content.value = this.childNodes[2].firstChild.nodeValue;
+			writer.value = this.childNodes[3].firstChild.nodeValue;			
 		}
 			for(let i=0; i<result[0].childNodes.length; i++){
 				let tdTag = document.createElement('td');
@@ -57,25 +68,9 @@ function contentRow(result){
 				trTag.appendChild(tdTag);
 		}
 		
-		//임의로 버튼 생성 
-		let button = document.createElement('button');
-		button.innerHTML = "삭제";
-		button.onclick = function(){
-			console.log(this.parentNode.parentNode.remove()); //이벤트가 발생되는 element : this / 여기서는 button을 의미한다.
-			let id = this.parentNode.parentNode.childNodes[0].firstChild.nodeValue;
-			let req = new XMLHttpRequest();
-			req.open('get','../deleteEmp?empId='+ id);
-			req.send();
-			req.onload = function(){
-			console.log(req.responseText);
-			}
-		}
-		let tdTag = document.createElement('td');
-		tdTag.appendChild(button);
-		trTag.appendChild(tdTag);
-		
 		trTags.push(trTag);
 
 	}
 		return trTags;
 }
+

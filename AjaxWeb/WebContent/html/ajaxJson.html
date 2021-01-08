@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/ajaxJson.html</title>
+</head>
+<body>
+	<div id = 'show'></div>
+	<script>
+		let json = {
+				"name": "John",
+				"age":30,
+				"cars": ["Ford","BMW","Fiat"]
+		}
+		//let jsonObj = JSON.parse(json);
+		
+		console.log(json.cars[0]);
+	
+	
+		let xhtp = new XMLHttpRequest();
+		xhtp.open('get','../empListJson');
+		xhtp.send(); //server에 있는 .json 파일을 요청
+		xhtp.onload = function (){
+			let data = xhtp.response;
+			//console.log(xhtp.response); //.response = json파일을 있는 그대로 읽어옴
+			//console.log(JSON.parse(data)); //javascript의 object 배열로 바꾸어줌.
+			let obj = JSON.parse(data); // 파싱해서 나온 오브젝트 배열 
+			let ulTag= document.createElement('ul');
+			document.getElementById('show').appendChild(ulTag);
+			for(let i=0;i<obj.length;i++){
+				let liTag =document.createElement('li');
+				
+				let val = obj[i].id + "," + obj[i].firstName + ","
+				+ obj[i].lastName + "," + obj[i].email + "," + obj[i].salary + "," 
+				+ obj[i].jobId + "," + obj[i].hireDate ; 
+				
+				let tNode = document.createTextNode(val);
+				liTag.appendChild(tNode);
+				ulTag.appendChild(liTag);
+				/* console.log(obj[i].id, obj[i].firstName,
+						obj[i].lastName,obj[i].email,obj[i].salary,obj[i].jobId,obj[i].hireDate); */
+			}
+		}
+	</script>
+</body>
+</html>

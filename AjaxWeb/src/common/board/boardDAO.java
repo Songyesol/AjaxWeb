@@ -58,7 +58,7 @@ public class boardDAO {
 	}
 	
 	public List<boardVO> getBoardList() {
-		String sql = "select * from boards";
+		String sql = "select * from boards order by 1";
 		List<boardVO> list = new ArrayList<>();
 		
 		try {
@@ -86,4 +86,54 @@ public class boardDAO {
 		}
 		return list;
 	} // end of boardList()
+	
+	public boolean deleteBoard(boardVO vo) {
+		String sql = "delete from boards where board_no = ?";
+		int r =0;
+		try {
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, vo.getBoardNo());
+			
+			r=psmt.executeUpdate();
+			System.out.println(r+"건 삭제완료");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return r==1?true:false;
+		
+	}//end of deleteBoard()
+	
+	public boolean updateBrd(boardVO vo) {
+		int r = 0;
+		String sql = "update boards set title = ?, content = ?, writer = ? where board_no = ?";
+		try {
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getTitle());
+			psmt.setString(2, vo.getContent());
+			psmt.setString(3, vo.getWriter());
+			psmt.setInt(4, vo.getBoardNo());
+			
+			r = psmt.executeUpdate();
+			System.out.println(r+"건 수정됨");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return r == 1 ? true : false;
+		
+	}
 }

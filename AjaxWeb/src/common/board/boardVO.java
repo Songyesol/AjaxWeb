@@ -6,6 +6,7 @@ public class boardVO {
 	private String content;
 	private String writer;
 	private String creationDate;
+	
 	public int getBoardNo() {
 		return boardNo;
 	}
