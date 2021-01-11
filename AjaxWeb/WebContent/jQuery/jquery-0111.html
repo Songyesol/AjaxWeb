@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_select1_4_text.html</title>
+    <script src = '../js/jquery-3.5.1.min.js'></script>
+    <script>
+        let persons = [];
+        persons.push('hong');
+        persons.push('hwang');
+        persons.push('park');
+
+        $('document').ready(function(){
+            // persons.forEach(function (a,b,c){
+            //     console.log(a,b,c);
+            // });
+            let ulTag = $('<ul />').attr('id','main'); //.attr()==.setAttribute()
+            $.each(persons, function(a,b){
+                console.log(a,b); //a-인덱스값 b-요소값
+                ulTag.append($('<li />').html(b));
+            });
+            console.log(ulTag);
+            $('body').append(ulTag);
+
+            let tableTag = $('<table />').attr('border','1');
+            $('#p').append(tableTag);
+            $.each(persons,function (a,b) {   
+                let trTag = $('<tr />');
+                $(trTag).mouseover(function () {
+                   console.log($(this)); 
+                   $(this).css('background-color','gold');
+                });
+                $(trTag).mouseout(function(){
+                    $(this).css('background-color','');
+                });
+                let tdTag = $('<td />').html(b);
+                trTag.append(tdTag);
+                let buttonTag = $('<td />')
+                let button = $('<button />').html('삭제');
+                $(button).click(function ()  {
+                    $(this).parent().parent().remove();
+                });
+                buttonTag.append(button);
+                trTag.append(buttonTag);
+
+                tableTag.append(trTag);
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div class="p"></div>
+    <div id="p"></div>
+</body>
+</html>
