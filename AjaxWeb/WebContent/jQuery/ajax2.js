@@ -17,22 +17,23 @@ $(function(){
     $('body').on('click','#all_check',function(){
         console.log('checked');
         $('td>input').prop('checked',$('#all_check').is(":checked"));
-        // if($('#all_check').is(":checked")) {
-        // $('td > input').prop('checked',true);
-        // } else {
-        // $('td > input').prop('checked',false);
-        // }
     });
 
-    $('body').on('click','#ckb',function(){
-        $('#ckb').each(function(){
-            if(($('#ckb').is(':checked'))){
-                
-            } else {
-                console.log('false');
-            }
-        })
-    })
+	$('body').on('click','#ckb',function(){
+		console.log('single_checked');
+		let checked = $(this).is(':checked');
+		if(!checked){
+			$('#all_check').prop("checked",false);
+		}
+	});
+	$('body').on('click','#ckb',function(){
+		let is_checked  = true;
+		$('#ckb').each(function(){
+			is_checked = is_checked && $(this).is(':checked');
+		})
+		$('#all_check').prop('checked', true);
+	});
+
 });
 
 function showContent(result){
@@ -65,7 +66,9 @@ function showContent(result){
                for(field of headers){
                    let td = $('<td />');
                    if(field == 'chkbox'){
+					
                     let checkbox = $('<input />').attr('type','checkbox').attr('id','ckb');
+					checkbox.addClass('singleChecked');
                                     td.append(checkbox);
                     
                    }else {
