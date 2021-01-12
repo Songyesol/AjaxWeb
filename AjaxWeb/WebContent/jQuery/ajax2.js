@@ -23,17 +23,15 @@ $(function(){
         // $('td > input').prop('checked',false);
         // }
     });
-    // $('body').on('click',$('td>input').is(':checked'),function(){
-    //     if($('#contents>input').is(':checked')==true){
-    //         console.log('all checked');
-    //     }
-    // })
-    $('#show').on('click','#checkbox',function(){
-        if(($('#checkbox').is(':checked'))){
-            console.log('true');
+
+    $('body').on('click','#ckb',function(){
+        $('#ckb').each(function(){
+            if(($('#ckb').is(':checked'))){
+                
             } else {
                 console.log('false');
             }
+        })
     })
 });
 
@@ -55,7 +53,7 @@ function showContent(result){
            table.append(title);
            $(data).each(function(idx,obj){
                if(idx < 5 ){ 
-               let tr = $('<tr />').attr('align','center').attr('id','contents');
+               let tr = $('<tr />').attr('align','center');
                $(tr).attr('id',obj.id);
                $(tr).on({
                'mouseover': function(){
@@ -67,7 +65,7 @@ function showContent(result){
                for(field of headers){
                    let td = $('<td />');
                    if(field == 'chkbox'){
-                    let checkbox = $('<input />').attr('type','checkbox');
+                    let checkbox = $('<input />').attr('type','checkbox').attr('id','ckb');
                                     td.append(checkbox);
                     
                    }else {
