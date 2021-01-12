@@ -26,13 +26,13 @@ $(function(){
 			$('#all_check').prop("checked",false);
 		}
 	});
-	$('body').on('click','#ckb',function(){
+	/*$('body').on('click','#ckb',function(){
 		let is_checked  = true;
 		$('#ckb').each(function(){
 			is_checked = is_checked && $(this).is(':checked');
 		})
 		$('#all_check').prop('checked', true);
-	});
+	});*/
 
 });
 
